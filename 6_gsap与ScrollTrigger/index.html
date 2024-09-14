@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 200px;
+            height: 200px;
+            background: pink;
+        }
+
+        .model {
+            width: 200px;
+            height: 200px;
+            background: yellow;
+        }
+
+        .list {
+            display: flex;
+
+        }
+
+        .li {
+            width: 200px;
+            height: 200px;
+            background: gold;
+            margin: 20px;
+        }
+
+        .left_box {
+            width: 200px;
+            height: 200px;
+        }
+
+        .red {
+            background: red;
+        }
+
+        .blue {
+            background: blue;
+        }
+
+        .green {
+            background: green;
+        }
+
+        .scale_box {
+            background: #ccc;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .fixed {
+            background: forestgreen;
+            position: sticky;
+            width: 100%;
+            bottom: 0;
+            left: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div style="height: 1400px;"></div>
+        <div class="wrap">
+            <div class="box"></div>
+        </div>
+        <div style="height: 1400px;"></div>
+        <div class="left">
+            <div class="model"></div>
+        </div>
+        <div style="height: 1400px;"></div>
+        <div class="list">
+            <div class="li"></div>
+            <div class="li"></div>
+            <div class="li"></div>
+            <div class="li"></div>
+        </div>
+        <div style="height: 500px;"></div>
+        <div class="left_box red"></div>
+        <div class="left_box blue"></div>
+        <div class="left_box green"></div>
+        <div style="height: 500px;"></div>
+        <div class="scale_box" style="height: 700px;">scale</div>
+        <div style="height: 400px;"></div>
+    </div>
+
+    <div class="fixed" style="height: 800px;">footer</div>
+
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/ScrollTrigger.min.js"></script>
+
+<script>
+    gsap.registerPlugin(ScrollTrigger)
+
+    ScrollTrigger.defaults({
+        markers: true
+    });
+
+    const tl = gsap.timeline({
+        scrollTrigger: {
+            scrub: 1,
+            pin: true,
+            trigger: ".box",
+            start: "top 80%", // 进入动画范围
+            end: "bottom 20%",  // 结束范围
+            // endTrigger: ".wrap",
+        },
+    });
+
+    const model_tl = gsap.timeline({
+        scrollTrigger: {
+            scrub: 1,
+            pin: true,
+            trigger: ".model",
+            start: "top 80%", // 进入动画范围
+            end: "bottom 20%",  // 结束范围
+            // endTrigger: ".wrap",
+        },
+    })
+
+    const scale_tl = gsap.timeline({
+        scrollTrigger: {
+            scrub: 1,
+            trigger: ".scale_box",
+            start: "center top", // 进入动画范围
+            end: "+=500",  // 结束范围
+        },
+    });
+
+    const left_box_tl = gsap.timeline({
+        scrollTrigger: {
+            start: "center top", // 当触发器的顶部碰到视口顶部时开始执行
+            end: "+=400",  // 结束范围 再滚动500px后结束
+            scrub: 1,
+            trigger: ".left_box",
+        }
+    })
+
+    tl.to(".box", {
+        rotateZ: 360,
+        duration: 2,
+        ease: "power1.out",
+    });
+
+    model_tl.to('.model', {
+        x: 200,
+        duration: 4,
+        ease: "power1.out",
+    })
+
+    scale_tl.to('.scale_box', {
+        scale: 0.95,
+        duration: 2,
+        ease: "power1.out"
+    })
+
+    left_box_tl.to('.red', {
+        x: 500,
+        duration: 2,
+        ease: "power1.out"
+    })
+
+    left_box_tl.to('.blue', {
+        x: 300,
+        duration: 2,
+    })
+
+    left_box_tl.to('.green', {
+        x: 100,
+        duration: 2,
+    })
+
+    // 定义gsap时间线函数
+    const list_tl = gsap.timeline();
+
+    list_tl.from('.li', {
+        y: 100,
+        opacity: 0,
+        duration: 1,
+        scrollTrigger: {
+            pin: true, // 是否固定元素
+            scrub: true, // 动画的进度链接到滚动触发器进度
+            start: "top 80%", // 进入动画范围
+            end: "bottom 20%",  // 结束范围
+            trigger: '.list' // 触发元素
+        },
+        stagger: 0.2
+    })
+</script>
+
+</html>

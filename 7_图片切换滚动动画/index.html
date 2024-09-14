@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .index_product_banner {
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            overflow: hidden;
+
+        }
+
+        .index_product_banner .right_image {
+            height: 100vh;
+        }
+
+        .index_product_banner img {
+
+            width: auto;
+
+            height: 100%;
+
+            max-width: unset;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="index_product_banner" id="yourElementId">
+        <div class="right_image">
+            <img class="pImage" src="./img/news_cover1.png" alt="">
+        </div>
+    </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollToPlugin.min.js"></script>
+<script>
+    //注册 ScrollTrigger、ScrollToPlugin 插件
+    gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+    var currentIndex = 0; // 初始化索引为0
+    // 图像文件名的前缀和后缀
+    const imagePrefix = 'https://img1.baidu.com/it/u=1075362846,1567972572&fm=253&fmt=auto&app=120&f=JPEG?w=800&h=500';
+    const imageSuffix = '.jpeg';
+    // 要预加载的图像数量
+    const totalImages = 4; // 请根据实际情况修改
+    // 预加载所有图像
+    function preloadImages() {
+        for (let i = 0; i < totalImages; i++) {
+            const img = new Image();
+            img.src = `${imagePrefix}${i}${imageSuffix}`;
+        }
+    }
+    // 创建用于动画的时间轴
+    const tl = gsap.timeline({
+        scrollTrigger: {
+            trigger: "#yourElementId", // 触发容器
+            start: 'top top',
+            end: '6000',
+            scrub: true,
+            pin: true, // 固定容器
+            //监测滚动进度，当滚动导致索引变化时，根据新的索引更新显示的图片，以实现滚动时显示不同的图片效果
+            onUpdate: self => {     //self 是回调函数的参数，它代表了ScrollTrigger的当前状态和属性
+                const progress = self.progress;     //表示当前滚动进度，范围从0到1，0表示顶部，1表示底部
+                //newIndex通过将当前滚动进度self.progress 乘以总图片数量（78张图片）并向下取整（使用Math.floor函数）来计算一个新的索引。这个索引表示当前滚动进度对应的图片索引
+                newIndex = Math.floor(progress * totalImages);
+                //检查新计算的索引newIndex 是否与之前存储的currentIndex 相同。如果不同，说明滚动已经导致了索引的变化，于是将currentIndex 更新为新的索引，并调用updateImages() 函数
+                if (newIndex !== currentIndex) {
+                    currentIndex = newIndex;
+                    updateImages(); // 更新显示图片
+                }
+            }
+        }
+    });
+
+    // 更新显示图片的函数
+    function updateImages() {
+        // 基于当前索引更新图片源
+        var imageElement = document.querySelector('.index_product_banner .pImage');
+        imageElement.src = `${imagePrefix}${currentIndex}${imageSuffix}`;
+    }
+
+    // image初始化显示图片
+    updateImages();
+</script>
+
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <style>
+        .container {
+            padding: 100px;
+            display: flex;
+        }
+
+        .box {
+            width: 100px;
+            height: 100px;
+            background: pink;
+            margin: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+    </div>
+</body>
+<script>
+    gsap.fromTo('.box', {
+        opacity: 0,
+    }, {
+        x: -0,
+        opacity: 1,
+        duration: 1,
+        stagger: 0.2, // 依次经过多少秒后进入动画
+        ease: "power2.out",
+    })
+</script>
+
+</html>

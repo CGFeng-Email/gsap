@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <style>
+        body {
+            height: 10000px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <img class="cover" src="./img//service_li6.png" alt="">
+    </div>
+</body>
+<script>
+    // 获取元素
+    const img = document.querySelector('img');
+    // 注册ScrollTrigger
+    gsap.registerPlugin(ScrollTrigger) 
+
+    // gsap.to(元素, 把元素默认的状态移动到指定的状态:{})
+    // gsap.from(元素, 把状态移动到默认的状态:{})
+    // gsap.fromTo是上面两个的结合体
+    // gsap.fromTo(元素, 起始状态：{}, 结束状态: {}) 
+
+    // 多个元素
+    // const box = document.querySelector('.box');
+    // const button = document.querySelector('.button');
+    // gsap.to([box,button], {})
+
+    gsap.fromTo(img, {
+        x: 100,
+        opacity: 0
+    }, {
+        x: 200, // transform: translateX(200px)
+        // x: '+=200', // 在form的200的基础上再往右移动200
+        // x: '80vw', // 单位
+        // x: () => { window.innerWidth / 2 }, // 调用一个函数，返回值
+        y: 200, // transform: translateY(200px)
+        // xPercent: -50, // transform: translateX(-50%)
+        // yPercent: -50, // transform: translatey(-50%)
+        border: '10px solid red', // 设置border
+        borderRadius: '50%', // 圆
+        backgroundColor: 'pink', // 背景
+        delay: 2, // 延迟多少时间后才执行动画
+        rotation: 360, // transform: rotate(360deg)
+        // transormOrigin: '0% 100%', // transform-origin: 0% 100% 源点
+        opacity: 1, // 不透明度
+        duration: 2, // 动画时间,耗时,持续多少时间
+        // onComplete() {}, // 动画执行完的回调函数
+        // repeat: 3, // 动画重复执行几遍，把值设置成-1就是无限循环
+        // repeatDelay: 1, // repeat的重复执行, 规定几秒才执行重复动画, 隔了1秒才执行
+        yoyo: true, // 默认: false, 会从结束点往会执行动画，一般搭配repeat使用
+        stagger: 1, // 如果同事有多个元素时，第一个元素会比第二个元素提前1秒执行动画,多个元素时，dom元素依次经过多少秒后进入动画
+        // scrollTrigger: { }  // 滚动
+        ease: 'power1.out', // 前面快，后面慢 'back.out':有个回弹的动画效果
+    })
+</script>
+
+</html>
