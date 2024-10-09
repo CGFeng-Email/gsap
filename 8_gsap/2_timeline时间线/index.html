@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 100px;
+            height: 100px;
+            background: red;
+        }
+
+        .box {
+            width: 100px;
+            height: 100px;
+            background: blue;
+        }
+
+        .box {
+            width: 100px;
+            height: 100px;
+            background: green;
+        }
+    </style>
+    <script src="../js/gsap.min.js"></script>
+</head>
+
+<body>
+    <div class="box red"></div>
+    <div class="box blue"></div>
+    <div class="box green"></div>
+</body>
+<script>
+    const tl = gsap.timeline();
+    tl.to('.red', {
+        x: 100,
+        duration: 1
+    })
+    tl.to('.blue', {
+        x: 200,
+        duration: 2
+    })
+    tl.to('.green', {
+        x: 300,
+        duration: 3
+    })
+</script>
+
+</html>
