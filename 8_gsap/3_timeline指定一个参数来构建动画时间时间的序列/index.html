@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+         .box {
+            width: 100px;
+            height: 100px;
+            background: red;
+        }
+
+        .blue {
+            width: 100px;
+            height: 100px;
+            background: blue;
+        }
+
+        .green {
+            width: 100px;
+            height: 100px;
+            background: green;
+        }
+
+        .pink {
+            width: 100px;
+            height: 100px;
+            background: pink;
+        }
+
+        .yellow {
+            width: 100px;
+            height: 100px;
+            background: yellow;
+        }
+    </style>
+    <script src="../js/gsap.min.js"></script>
+</head>
+
+<body>
+    <h3>红蓝同时执行</h3>
+    <div class="box red">x：500</div>
+    <div class="box blue">x: 600</div>
+    <h3>等待红蓝结束后，我再触发</h3>
+    <div class="box green">x: 700</div>
+    <h3>等绿结束后的2秒后，我再触发</h3>
+    <div class="box pink">x: 800</div>
+    <h3>上个动画结束前1秒，我开始执行</h3>
+    <div class="box yellow">x: 900</div>
+</body>
+<script>
+    // 时间线
+    const tl = gsap.timeline();
+
+    // 1秒之后触发
+    tl.to('.red', {x: 500, duration: 2}, 1);
+
+    // 上个动画开始，我也同时开始
+    tl.to('.blue', {x: 600, duration: 2}, '<');
+
+    // 上个动画结束后，我才开始执行（默认的）
+    tl.to('.green', {x: 700, duration: 2}, '>');
+
+    // 上个动画执行后，2秒我才执行
+    tl.to('.pink', {x: 800, duration: 2}, '+=2');
+
+    // 上个动画结束前1秒，我开始执行
+    tl.to('.yellow', {x: 900, duration: 2}, '-=1')
+</script>
+</html>
